@@ -7,15 +7,19 @@ using System.Threading.Tasks;
 
 namespace MNTeamReportExporter
 {
-    class Program
+	using System.Globalization;
+
+	class Program
     {
         static void Main(string[] args)
         {
-            var date = DateTime.Now.Date.AddDays(-1);
+			string file = GetReportFilePath(args);
 
-            var excel = new ExcelQueryFactory(@"C:\Users\Mati\Downloads\MN_TEAM_FailedTransfersAnalysis.xlsx");
+	        DateTime date = GetReportDate(args);
 
-            var transfers = (from c in excel.Worksheet<Transfer>("DATA")
+	        var excel = new ExcelQueryFactory(file);
+
+            List<Transfer> transfers = (from c in excel.Worksheet<Transfer>("DATA")
                              orderby c.Timestamp
                              where c.Timestamp > date && c.Timestamp < date.AddHours(24)
                             select c).ToList();
@@ -45,5 +49,25 @@ namespace MNTeamReportExporter
 
             Console.ReadKey();
         }
+
+	    private static string GetReportFilePath(string[] args)
+	    {
+		    return args[0];
+	    }
+
+	    private static DateTime GetReportDate(string[] args)
+	    {
+		    DateTime date;
+		    if (args.Length < 2)
+		    {
+			    date = DateTime.Now.Date.AddDays(-2);
+		    }
+		    else
+		    {
+			    date = DateTime.Parse(args[1], CultureInfo.InvariantCulture);
+		    }
+
+		    return date;
+	    }
     }
 }
