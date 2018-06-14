@@ -40,7 +40,7 @@ namespace MNTeamReportExporter
 
                     foreach (var transfer in transfersForTenant.Transfers)
                     {
-                        var line = $"{transfer.Timestamp} CorellationId: {transfer.CorellationId} Machine Name: {transfer.MachineName} Version: {transfer.Version} Reason: {transfer.Comment}";
+                        var line = $"{transfer.Timestamp} CorellationId: {transfer.CorellationId} Machine Name: {transfer.MachineName} Version: {transfer.Version} Reason: {transfer.Comment} {transfer.Jira}";
 
                         Console.WriteLine(line);
                     }

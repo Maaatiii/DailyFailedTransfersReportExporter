@@ -29,7 +29,10 @@ namespace MNTeamReportExporter
         [ExcelColumn("Comment")]
         public string Comment { get; set; }
 
-        public string TenantNo
+	    [ExcelColumn("JIRA")]
+	    public string Jira { get; set; }
+
+		public string TenantNo
         {
             get
             {
